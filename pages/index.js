@@ -8,6 +8,11 @@ export default function Portfolio() {
   return (
     <main className="bg-[#0a0f0d] text-white min-h-screen px-6 py-10 font-sans">
       <section className="text-center">
+        <img 
+          src="/profile.jpg" 
+          alt="Edet Joseph Ebong" 
+          className="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-green-500"
+        />
         <motion.h1 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
