@@ -1,13 +1,68 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva } from "class-variance-authority";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { Github, Mail, Twitter } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+
+// Utility function for class names
+const cn = (...inputs) => twMerge(clsx(inputs));
+
+// Button component
+const buttonVariants = cva(
+  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
+  {
+    variants: {
+      variant: {
+        default: "bg-green-500 text-white hover:bg-green-600",
+        outline: "border border-green-500 text-green-500 hover:bg-green-500 hover:text-white",
+      },
+      size: {
+        default: "h-10 py-2 px-4",
+        sm: "h-9 px-3 rounded-md",
+        lg: "h-11 px-8 rounded-md",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
+
+const Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "button";
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      {...props}
+    />
+  );
+});
+Button.displayName = "Button";
+
+// Card component
+const Card = React.forwardRef(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)}
+    {...props}
+  />
+));
+Card.displayName = "Card";
+
+const CardContent = React.forwardRef(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("p-6", className)} {...props} />
+));
+CardContent.displayName = "CardContent";
 
 export default function Portfolio() {
   return (
     <main className="bg-[#0a0f0d] text-white min-h-screen px-6 py-10 font-sans">
-      <section className="text-center">
+      <section className="text-china">
         <img 
           src="/profile.jpg" 
           alt="Edet Joseph Ebong" 
